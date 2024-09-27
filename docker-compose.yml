@@ -1,0 +1,13 @@
+version: "3"
+services:
+  postgres:
+    container_name: RubyRadio
+    image: postgres:13.4
+    environment:
+      POSTGRES_USER: radio
+      POSTGRES_PASSWORD: 1111
+      POSTGRES_DB: radio_development
+    ports:
+      - "5432:5432"
+    volumes:
+      - /tmp/postgres:/tmp/postgres

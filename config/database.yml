@@ -1,0 +1,21 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: <%= ENV['DB_USERNAME'] || 'radio' %>
+  password: <%= ENV['DB_PASSWORD'] || '1111' %>
+  host: <%= ENV['DB_HOST'] || 'localhost' %>
+
+development:
+  <<: *default
+  database: radio_development
+
+test:
+  <<: *default
+  database: radio_test
+
+production:
+  <<: *default
+  database: radio_production
+  username: <%= ENV['DB_USERNAME'] %>
+  password: <%= ENV['DB_PASSWORD'] %>

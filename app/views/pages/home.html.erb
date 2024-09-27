@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Radio</title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  <%= stylesheet_link_tag "application", media: "all", "data-turbo-track": "reload" %>
+  <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+</head>
+
+<body class="sm:bg-dark bg-green">
+  <nav class="bg-dark p-4 text-white flex justify-between">
+    <div class="text-xl">
+      <%= link_to 'Home', root_path, class: "text-white" %>
+    </div>
+    <div>
+      <% if current_user %>
+        <%= link_to 'Sign Out', signout_path, method: :delete, class: "ml-4 text-white" %>
+      <% else %>
+        <%= link_to 'Sign In', signin_path, class: "ml-4 text-white" %>
+        <%= link_to 'Sign Up', signup_path, class: "ml-4 text-white" %>
+      <% end %>
+    </div>
+  </nav>
+
+  <div class="">
+    <%= yield %>
+  </div>
+</body>
+</html>

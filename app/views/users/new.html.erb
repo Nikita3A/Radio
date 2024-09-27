@@ -1,0 +1,28 @@
+<div class="h-screen flex items-center justify-center bg-dark">
+  <div class="bg-darkGray p-4 sm:p-8 sm:rounded-2xl shadow-md w-full h-full sm:h-auto max-w-md flex flex-col justify-start">
+    <h2 class="sm:text-green text-white text-2xl font-bold mt-20 mb-10 text-center sm:mt-6 sm:mb-8">Radio</h2>
+    
+    <%= form_with(url: signup_path, model: @user, local: true, class: "flex flex-col") do |form| %>
+
+      <!-- Username Input -->
+      <div class="mb-2 sm:mb-4">
+        <%= form.text_field :username, placeholder: "username", class: "w-full p-3 bg-dark text-white rounded-2xl focus:outline-none focus:ring-2 focus:ring-green" %>
+      </div>
+
+      <!-- Password Input -->
+      <div class="mb-2 sm:mb-4">
+        <%= form.password_field :password, placeholder: "password", class: "w-full p-3 bg-dark text-white rounded-2xl focus:outline-none focus:ring-2 focus:ring-green" %>
+      </div>
+
+      <!-- Confirm Password Input -->
+      <div class="mb-4 sm:mb-4">
+        <%= form.password_field :password_confirmation, placeholder: "confirm password", class: "w-full p-3 bg-dark text-white rounded-2xl focus:outline-none focus:ring-2 focus:ring-green" %>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="mb-2 sm:mb-4 bg-green-100">
+        <%= form.submit "Signup", class: "w-full p-3 bg-green text-white rounded-2xl hover:bg-green-dark focus:outline-none" %>
+      </div>
+    <% end %>
+  </div>
+</div>
