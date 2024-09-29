@@ -7,22 +7,34 @@
       <!-- Username Input -->
       <div class="mb-2 sm:mb-4">
         <%= form.text_field :username, placeholder: "username", class: "w-full p-3 bg-dark text-white rounded-2xl focus:outline-none focus:ring-2 focus:ring-green" %>
+        <% if @user.errors[:username].any? %>
+          <p class="text-red-500"><%= @user.errors[:username].join(", ") %></p>
+        <% end %>
       </div>
 
       <!-- Password Input -->
       <div class="mb-2 sm:mb-4">
         <%= form.password_field :password, placeholder: "password", class: "w-full p-3 bg-dark text-white rounded-2xl focus:outline-none focus:ring-2 focus:ring-green" %>
+        <% if @user.errors[:password].any? %>
+          <!-- Show only the first unique error for password -->
+          <p class="text-red-500"><%= @user.errors[:password].uniq.join(", ") %></p>
+        <% end %>
       </div>
 
       <!-- Confirm Password Input -->
       <div class="mb-4 sm:mb-4">
         <%= form.password_field :password_confirmation, placeholder: "confirm password", class: "w-full p-3 bg-dark text-white rounded-2xl focus:outline-none focus:ring-2 focus:ring-green" %>
+        <% if @user.errors[:password_confirmation].any? %>
+          <!-- Only show errors specific to password_confirmation -->
+          <p class="text-red">Password and password confirmation doesn't match</p>
+        <% end %>
       </div>
 
       <!-- Submit Button -->
       <div class="mb-2 sm:mb-4 bg-green-100">
         <%= form.submit "Signup", class: "w-full p-3 bg-green text-white rounded-2xl hover:bg-green-dark focus:outline-none" %>
       </div>
+
     <% end %>
   </div>
 </div>
