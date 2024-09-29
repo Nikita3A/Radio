@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
   def home
-    @albums = Album.includes(:songs)
+    @albums = Album.all
   end
 end

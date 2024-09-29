@@ -1,0 +1,12 @@
+<h1><%= @album.title %> by <%= @album.artist %></h1>
+<p>Release Year: <%= @album.release_year %></p>
+<p>Duration: <%= @album.duration %> minutes</p>
+<p>Copies Available: <%= @album.copies %></p>
+
+<% if can? :update, @album %>
+  <%= link_to 'Edit', edit_album_path(@album) %>
+<% end %>
+
+<% if can? :destroy, @album %>
+  <%= link_to 'Delete', album_path(@album), method: :delete, data: { confirm: 'Are you sure?' } %>
+<% end %>

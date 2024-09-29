@@ -1,0 +1,18 @@
+<div class="container mx-auto p-6">
+  <h1 class="text-3xl font-bold text-center text-green mb-6">Albums</h1>
+
+  <% if can? :create, Album %>
+    <div class="text-center mb-6">
+      <%= link_to 'Create New Album', new_album_path, class: "bg-green text-white p-3 rounded-lg hover:bg-green-dark" %>
+    </div>
+  <% end %>
+
+  <ul class="space-y-4">
+    <% @albums.each do |album| %>
+      <li class="bg-darkGray p-4 rounded-lg shadow-md">
+        <%= link_to album.title, album, class: "text-xl font-semibold text-green" %> 
+        <span class="text-green">(<%= album.artist %>, <%= album.release_year %>)</span>
+      </li>
+    <% end %>
+  </ul>
+</div>

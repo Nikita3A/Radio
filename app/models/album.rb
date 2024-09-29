@@ -1,11 +1,22 @@
 class Album < ApplicationRecord
+  has_one_attached :image
   has_many :songs, dependent: :destroy
-  
-  validates :title, :artist, :release_year, :duration, :copies, presence: true
-  validates :release_year, numericality: { only_integer: true, greater_than_or_equal_to: 1880 }
-  validates :copies, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
 
-  # Додаткові поля
-  attribute :duration, :integer # Тривалість у секундах або хвилинах
-  attribute :copies, :integer   # Кількість екземплярів
+  # Ensure these fields are present
+  validates :title, presence: true
+  validates :artist, presence: true
+  validates :release_year, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 1880 }
+  validates :duration, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+  validates :copies, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+
+
+  # Allow the image to be blank, but validate when present
+  validates :image, presence: true, allow_blank: true
+
+  before_validation :set_default_duration
+  
+  # Set default duration to 0 before validation
+  def set_default_duration
+    self.duration ||= 0
+  end
 end

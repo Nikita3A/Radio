@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get 'playlists/new'
+  get 'playlists/create'
+  get 'playlists/index'
+  get 'playlists/show'
   get 'pages/home'
   get 'sessions/new'
   get 'sessions/create'
@@ -18,5 +22,7 @@ Rails.application.routes.draw do
   delete '/signout', to: 'sessions#destroy'
 
   # Routes for albums (only index and show actions)
-  resources :albums, only: [:index, :show]
+  resources :albums, only: [:index, :show, :new, :create]
+  resources :playlists, only: [:new, :create, :index, :show]
+
 end
