@@ -1,4 +1,5 @@
 class Song < ApplicationRecord
   belongs_to :album
-  validates :title, :lyrics, presence: true
+  validates :title, presence: true
+  validates :lyrics, presence: true, allow_blank: true
 end

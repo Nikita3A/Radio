@@ -36,43 +36,25 @@ class AlbumsController < ApplicationController
   
     # Дія для редагування існуючого альбому (форма)
     def edit
+      @album = Album.find(params[:id])
+      @song = @album.songs.build # Create a new song instance to use in the form
     end
   
     # Дія для оновлення альбому
     def update
       if @album.update(album_params)
-        redirect_to @album, notice: 'Album was successfully updated.'
+        # redirect_to @album, notice: 'Album was successfully updated.'
+        redirect_to root_path, notice: 'Album was successfully updated.'
       else
         render :edit
       end
     end
   
-    # Destroys the specified album
-    # def destroy
-    #     puts("FINISHED")
-
-    #     @album = Album.find(params[:id]) # Finds the album by ID
-    #     @album.destroy                     # Deletes the album
-    #     @albums = Album.all                # Fetches the updated list of albums
-
-    #     respond_to do |format|
-    #     format.html { redirect_to albums_url, notice: 'Album was successfully deleted.' }
-    #     format.js   # Responds with JavaScript (e.g., to update the page via AJAX)
-    #     end
-    # end
     def destroy
       @album = Album.find(params[:id])
       @album.destroy
       redirect_to root_path, notice: 'Album was successfully deleted.'
     end
-    
-    # DOCS
-    # def destroy
-    #     @album = Album.find(params[:id])
-    #     @album.destroy
-    
-    #     redirect_to root_path, status: :see_other
-    # end
     
     private
   

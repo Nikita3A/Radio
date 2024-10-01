@@ -22,7 +22,9 @@ Rails.application.routes.draw do
   delete '/signout', to: 'sessions#destroy'
 
   # Routes for albums (only index and show actions)
-  resources :albums
+  resources :albums do
+    resources :songs
+  end
   resources :playlists
 
 end

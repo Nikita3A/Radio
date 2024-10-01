@@ -1,41 +1,122 @@
-<%= form_with(model: @album, local: true) do |form| %>
-  <% if @album.errors.any? %>
-    <div class="errors">
-      <h2><%= pluralize(@album.errors.count, "error") %> prohibited this album from being saved:</h2>
-      <ul>
-        <% @album.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+<div class="h-full flex items-center justify-center bg-dark">
+  <div class="bg-darkGray p-4 sm:p-8 sm:rounded-2xl shadow-md w-full h-full sm:h-auto max-w-md flex flex-col justify-start">
+    <h2 class="text-green text-2xl font-bold mt-20 mb-10 text-center sm:mt-6 sm:mb-8">Edit Album</h2>
 
-  <div class="field">
-    <%= form.label :title %>
-    <%= form.text_field :title %>
-  </div>
-
-  <div class="field">
-    <%= form.label :artist %>
-    <%= form.text_field :artist %>
-  </div>
-
-  <div class="field">
-    <%= form.label :release_year %>
-    <%= form.number_field :release_year %>
-  </div>
-
-  <div class="field">
-    <%= form.label :duration %>
-    <%= form.number_field :duration %>
-  </div>
-
-  <div class="field">
-    <%= form.label :copies %>
-    <%= form.number_field :copies %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
+<% if @song && @song.errors.any? %>
+  <div class="mb-4 text-red-500">
+    <h2><%= pluralize(@song.errors.count, "error") %> prohibited this song from being saved:</h2>
+    <ul>
+      <% @song.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
   </div>
 <% end %>
+
+    <!-- Album Update Form -->
+    <%= form_with(model: @album, local: true, class: "flex flex-col") do |form| %>
+      <!-- Error Handling -->
+      <% if @album.errors.any? %>
+        <div class="mb-4 text-red-500">
+          <h2><%= pluralize(@album.errors.count, "error") %> prohibited this album from being saved:</h2>
+          <ul>
+            <% @album.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <!-- File Input for Album Image -->
+      <div class="mb-4 text-green">
+        <%= form.label :image, "Album Image", class: "mb-2" %>
+        <label class="w-full p-3 bg-dark text-white rounded-2xl cursor-pointer text-center block focus:outline-none focus:ring-2 focus:ring-green">
+          Choose File
+          <%= form.file_field :image, style: "display: none;", id: "file-upload" %>
+        </label>
+      </div>
+
+      <!-- Title Input -->
+      <div class="mb-4">
+        <%= form.text_field :title, placeholder: "Album Title", class: "w-full p-3 bg-dark text-white rounded-2xl focus:outline-none focus:ring-2 focus:ring-green" %>
+      </div>
+
+      <!-- Artist Input -->
+      <div class="mb-4">
+        <%= form.text_field :artist, placeholder: "Artist Name", class: "w-full p-3 bg-dark text-white rounded-2xl focus:outline-none focus:ring-2 focus:ring-green" %>
+      </div>
+
+      <!-- Release Year Input -->
+      <div class="mb-4">
+        <%= form.number_field :release_year, placeholder: "Release Year", class: "w-full p-3 bg-dark text-white rounded-2xl focus:outline-none focus:ring-2 focus:ring-green" %>
+      </div>
+
+      <!-- Duration Display (Read-Only) -->
+      <div class="mb-4">
+        <%= form.number_field :duration, value: @album.duration, class: "w-full p-3 bg-dark text-white rounded-2xl focus:outline-none focus:ring-2 focus:ring-green", readonly: true %>
+        <p class="text-green text-sm">Duration is <%= @album.duration %> seconds</p>
+      </div>
+
+      <!-- Copies Input -->
+      <div class="mb-4">
+        <%= form.number_field :copies, placeholder: "Number of Copies", class: "w-full p-3 bg-dark text-white rounded-2xl focus:outline-none focus:ring-2 focus:ring-green" %>
+      </div>
+
+      <!-- Submit Button for Album Update -->
+      <div class="mb-4">
+        <%= form.submit "Update Album", class: "w-full p-3 bg-green text-white rounded-2xl hover:bg-green-dark focus:outline-none" %>
+      </div>
+    <% end %>
+
+<!-- Form to Add a New Song -->
+<div class="mt-8">
+  <h3 class="text-green text-lg font-semibold mb-2">Add a New Song</h3>
+
+  <%= form_with(model: [@album, @song], local: true, class: "flex flex-col") do |form| %>
+    <!-- Song Title Input -->
+    <div class="mb-4">
+      <%= form.text_field :title, placeholder: "Song Title", class: "w-full p-3 bg-dark text-white rounded-2xl focus:outline-none focus:ring-2 focus:ring-green" %>
+    </div>
+
+    <!-- Song Duration Input -->
+    <div class="mb-4">
+      <%= form.number_field :duration, placeholder: "Duration (in seconds)", class: "w-full p-3 bg-dark text-white rounded-2xl focus:outline-none focus:ring-2 focus:ring-green" %>
+    </div>
+
+    <!-- Song Lyrics Input -->
+    <div class="mb-4">
+      <%= form.text_area :lyrics, placeholder: "Lyrics", rows: 4, class: "w-full p-3 bg-dark text-white rounded-2xl focus:outline-none focus:ring-2 focus:ring-green" %>
+    </div>
+
+    <!-- Submit Button for New Song -->
+    <div class="mb-4">
+      <%= form.submit "Add Song", class: "w-full p-3 bg-green text-white rounded-2xl hover:bg-green-dark focus:outline-none" %>
+    </div>
+  <% end %>
+</div>
+
+
+<!-- List of Songs -->
+<div class="mt-8">
+  <h3 class="text-green text-lg font-semibold mb-2">Songs</h3>
+  <ul class="list-disc pl-5 text-white">
+    <% @album.songs.each do |song| %>
+      <li class="flex justify-between items-center">
+        <span>
+          <%= song.title %>
+          <% if song.duration.present? %> - <%= "#{song.duration} seconds" %> <% end %>
+        </span>
+        
+        <% if song.persisted? %> <!-- Check if the song has been saved -->
+          <!-- Delete Song Button -->
+          <%= button_to "Delete", album_song_path(@album, song), method: :delete, class: "ml-4 bg-red-600 text-white p-2 rounded hover:bg-red-800", data: { confirm: "Are you sure you want to delete this song?" } %>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+</div>
+
+
+
+  </div>
+</div>

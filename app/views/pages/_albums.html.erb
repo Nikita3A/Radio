@@ -11,10 +11,10 @@
       </div>
       <% if current_user&.admin? %>
         <div class="ml-auto flex flex-col space-y-2">
-<%= form_with model: album, method: :delete, local: true, data: { turbo: false } do |form| %>
-  <%= form.submit 'Delete', data: { confirm: "Are you sure you want to delete this album?" }, class: "bg-red text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors" %>
-<% end %>
-
+          
+          <%= form_with model: album, method: :delete, local: true, data: { turbo: false } do |form| %>
+            <%= form.submit 'Delete', data: { confirm: "Are you sure you want to delete this album?" }, class: "bg-red text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors" %>
+          <% end %>
 
           <%= link_to 'Edit', edit_album_path(album), class: "bg-dark text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors" %>
         </div>
