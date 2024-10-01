@@ -2,64 +2,32 @@
 <html>
 <head>
   <title>Radio</title>
-  <%= csrf_meta_tags %>
-  <%= csp_meta_tag %>
-  <%= stylesheet_link_tag "application", media: "all", "data-turbo-track": "reload" %>
-  <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+  <meta name="csrf-param" content="authenticity_token">
+  <meta name="csrf-token" content="<%= csrf_meta_tags %>">
+  
+  <link rel="stylesheet" href="/assets/application.css" media="all" data-turbo-track="reload">
+  
+  <!-- Correct placement of script -->
+  <!-- <script src="/assets/application.js" data-turbo-track="reload" defer="defer"></script>-->
+  <%= javascript_include_tag 'application', 'data-turbo-track': 'reload' %>
+
 </head>
 
 <body class="bg-dark">
   <nav class="bg-darkGray w-full p-4 text-white flex justify-between">
     <div class="text-xl">
-      <%= link_to 'Home', root_path, class: "text-white" %>
+      <a class="text-white" href="/">Home</a>
     </div>
     <div>
-      <% if current_user %>
-        <%= link_to 'Sign Out', signout_path, method: :delete, class: "ml-4 text-white" %>
-      <% else %>
-        <%= link_to 'Sign In', signin_path, class: "ml-4 text-white" %>
-        <%= link_to 'Sign Up', signup_path, class: "ml-4 text-white" %>
-      <% end %>
+      <a class="ml-4 text-white" rel="nofollow" data-method="delete" href="/signout">Sign Out</a>
     </div>
   </nav>
 
   <div class="container mx-auto p-4 text-white">
-    <% if current_user %>
-      <!-- Кнопка для створення плейлиста для всіх користувачів -->
-      <%= link_to 'Create Playlist', new_playlist_path, class: "btn btn-primary" %>
-
-      <% if current_user.admin? %>
-        <!-- Кнопка для створення альбому лише для адміністратора -->
-        <%= link_to 'Create Album', new_album_path, class: "btn btn-success ml-2" %>
-      <% end %>
-    <% end %>
-
     <h1 class="text-2xl my-4">Albums</h1>
-
-<ul class="space-y-6">
-  <% @albums.each do |album| %>
-    <li class="bg-darkGray p-3 rounded-lg shadow-lg flex items-center space-x-5 hover:shadow-xl transition-shadow duration-200 mb-6" style="height: 8rem;"> <!-- Fixed height using inline style -->
-      <!-- Display resized album image -->
-      <%= image_tag album.image.variant(resize_to_fill: [80, 80]).processed, class: "w-20 h-20 object-cover rounded-lg" %> <!-- Fixed size for image -->
-      
-      <div class="text-green flex-1 ml-4 flex flex-col justify-center">
-        <%= link_to album.title, album, class: "text-2xl font-bold hover:underline" %>
-        <p class="text-green-light text-sm">
-          by <%= album.artist %>, <span class="font-semibold">Release Year: <%= album.release_year %></span>
-        </p>
-      </div>
-    </li>
-  <% end %>
-</ul>
-
-
-
-
-
-
-
-
-
+    <div id="albums-list">
+      <%= render 'albums' %> <!-- Assuming _albums.html.erb is in the same directory -->
+    </div>
   </div>
 </body>
 </html>

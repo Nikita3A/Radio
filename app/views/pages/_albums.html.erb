@@ -1,0 +1,25 @@
+<!-- _albums.html.erb -->
+<ul class="space-y-6">
+  <% @albums.each do |album| %>
+    <li class="bg-darkGray p-3 rounded-lg shadow-lg flex items-center space-x-5 hover:shadow-xl transition-shadow duration-200 mb-6" style="height: 8rem;">
+      <%= image_tag album.image.variant(resize_to_fill: [80, 80]).processed, class: "w-20 h-20 object-cover rounded-lg" %>
+      <div class="text-green flex-1 ml-4 flex flex-col justify-center">
+        <%= link_to album.title, album, class: "text-2xl font-bold hover:underline" %>
+        <p class="text-green-light text-sm">
+          by <%= album.artist %>, <span class="font-semibold">Release Year: <%= album.release_year %></span>
+        </p>
+      </div>
+      <% if current_user&.admin? %>
+        <div class="ml-auto flex flex-col space-y-2">
+<%= form_with model: album, method: :delete, local: true, data: { turbo: false } do |form| %>
+  <%= form.submit 'Delete', data: { confirm: "Are you sure you want to delete this album?" }, class: "bg-red text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors" %>
+<% end %>
+
+
+          <%= link_to 'Edit', edit_album_path(album), class: "bg-dark text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors" %>
+        </div>
+      <% end %>
+    </li>
+  <% end %>
+</ul>
+

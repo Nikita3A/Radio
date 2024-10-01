@@ -47,12 +47,33 @@ class AlbumsController < ApplicationController
       end
     end
   
-    # Дія для видалення альбому
+    # Destroys the specified album
+    # def destroy
+    #     puts("FINISHED")
+
+    #     @album = Album.find(params[:id]) # Finds the album by ID
+    #     @album.destroy                     # Deletes the album
+    #     @albums = Album.all                # Fetches the updated list of albums
+
+    #     respond_to do |format|
+    #     format.html { redirect_to albums_url, notice: 'Album was successfully deleted.' }
+    #     format.js   # Responds with JavaScript (e.g., to update the page via AJAX)
+    #     end
+    # end
     def destroy
+      @album = Album.find(params[:id])
       @album.destroy
-      redirect_to albums_path, notice: 'Album was successfully deleted.'
+      redirect_to root_path, notice: 'Album was successfully deleted.'
     end
-  
+    
+    # DOCS
+    # def destroy
+    #     @album = Album.find(params[:id])
+    #     @album.destroy
+    
+    #     redirect_to root_path, status: :see_other
+    # end
+    
     private
   
     # Знаходження альбому для дій show, edit, update, destroy
