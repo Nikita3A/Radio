@@ -16,6 +16,7 @@ test:
 
 production:
   <<: *default
-  database: radio_production
-  username: <%= ENV['DB_USERNAME'] %>
-  password: <%= ENV['DB_PASSWORD'] %>
+  database: radio
+  username: radio
+  password: 1111
+  host: localhost 
