@@ -1,7 +1,8 @@
 class Album < ApplicationRecord
   has_one_attached :image
   has_many :songs, dependent: :destroy
-
+  has_and_belongs_to_many :playlists
+  
   # Ensure these fields are present
   validates :title, presence: true
   validates :artist, presence: true

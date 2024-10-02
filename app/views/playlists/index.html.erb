@@ -1,2 +1,32 @@
-<h1>Playlists#index</h1>
-<p>Find me in app/views/playlists/index.html.erb</p>
+<div class="min-h-screen flex items-center justify-center bg-dark">
+  <div class="bg-darkGray p-4 sm:p-8 sm:rounded-2xl shadow-md w-full max-w-md sm:h-auto flex flex-col justify-start">
+    <h2 class="text-green text-2xl font-bold mt-20 mb-10 text-center sm:mt-6 sm:mb-8">Playlists</h2>
+    <!-- Display List of Playlists -->
+    <ul class="list-disc pl-5 text-white mb-8">
+      <% @playlists.each do |playlist| %>
+        <li class="flex rounded-2xl bg-dark p-2 justify-between items-center">
+          <span>
+            <%= link_to playlist.name, playlist_path(playlist), class: "text-green hover:underline" %>
+          </span>
+
+          <!-- Delete Playlist Button -->
+            <%= button_to "Delete", playlist_path(playlist), method: :delete, class: "ml-4 bg-red text-white p-2 rounded-2xl", data: { confirm: "Are you sure you want to delete this playlist?" } %>
+        </li>
+      <% end %>
+    </ul>
+
+    <!-- Form to Create a New Playlist -->
+    <h3 class="text-green text-lg font-semibold mb-2">Create a New Playlist</h3>
+    <%= form_with(model: @playlist, local: true, class: "flex flex-col") do |form| %>
+    <!-- Playlist Name Input -->
+    <div class="mb-4">
+        <%= form.text_field :name, placeholder: "Playlist Name", class: "w-full p-3 bg-dark text-white rounded-2xl focus:outline-none focus:ring-2 focus:ring-green" %>
+    </div>
+
+    <!-- Submit Button for New Playlist -->
+    <div class="mb-4">
+        <%= form.submit "Create Playlist", class: "w-full p-3 bg-green text-white rounded-2xl hover:bg-green-dark focus:outline-none" %>
+    </div>
+    <% end %>
+  </div>
+</div>

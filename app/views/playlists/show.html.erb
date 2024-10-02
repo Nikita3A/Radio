@@ -1,2 +1,24 @@
-<h1>Playlists#show</h1>
-<p>Find me in app/views/playlists/show.html.erb</p>
+<div class="min-h-screen flex items-center justify-center bg-dark">
+  <div class="bg-darkGray p-4 sm:p-8 sm:rounded-2xl shadow-md w-full max-w-md sm:h-auto flex flex-col justify-start">
+    <h1 class="text-green text-3xl font-bold mb-4 text-center">Songs in <%= @playlist.name %></h1>
+
+    <% if @songs.present? %>
+      <ul class="list-disc pl-5 text-white mb-8">
+        <% @songs.each do |song| %>
+          <li class="flex justify-between items-center mb-2">
+            <span class="text-white"><%= song.title %></span>
+
+            <!-- Delete Button to remove the song from the playlist -->
+            <%= button_to "Delete", playlist_remove_from_playlist_path(@playlist, song_id: song.id), method: :delete, class: "bg-red text-white p-2 rounded hover:bg-red-dark", data: { confirm: "Are you sure you want to remove this song from the playlist?" } %>
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p class="text-white">No songs found in this playlist.</p>
+    <% end %>
+
+    <div class="mt-4">
+      <%= link_to 'Back to Playlists', playlists_path, class: "text-green hover:underline" %>
+    </div>
+  </div>
+</div>

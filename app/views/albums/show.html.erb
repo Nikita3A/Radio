@@ -1,12 +1,66 @@
-<h1><%= @album.title %> by <%= @album.artist %></h1>
-<p>Release Year: <%= @album.release_year %></p>
-<p>Duration: <%= @album.duration %> minutes</p>
-<p>Copies Available: <%= @album.copies %></p>
+<div class="min-h-screen flex items-center justify-center bg-dark">
+  <div class="bg-darkGray p-4 sm:p-8 sm:rounded-2xl shadow-md w-full max-w-md sm:h-auto flex flex-col justify-start">
+    <!-- Optional: Add a button or link to go back or perform actions -->
+    <div class="">
+      <%= link_to 'Back', root_path, class: "text-green hover:underline" %>
+    </div>
 
-<% if can? :update, @album %>
-  <%= link_to 'Edit', edit_album_path(@album) %>
-<% end %>
+    <h1 class="text-green text-3xl font-bold mb-4 text-center">Album Details</h1>
+    
+    <h2 class="text-green text-xl font-bold mt-2 mb-2">
+      <%= @album.title %> by <%= @album.artist %>
+    </h2>
+    
+    <p class="text-white mb-2">
+      <strong>Release Year:</strong> <%= @album.release_year %>
+    </p>
+    <p class="text-white mb-2">
+      <strong>Duration:</strong> <%= @album.duration %> minutes
+    </p>
+    <p class="text-white mb-2">
+      <strong>Copies Available:</strong> <%= @album.copies %>
+    </p>
 
-<% if can? :destroy, @album %>
-  <%= link_to 'Delete', album_path(@album), method: :delete, data: { confirm: 'Are you sure?' } %>
-<% end %>
+    <!-- Display Songs -->
+    <h3 class="text-green text-lg font-semibold mt-4 mb-2">Songs</h3>
+    <ul class="list-disc pl-5 text-white mb-4">
+      <% @album.songs.each do |song| %>
+        <li class="flex justify-between items-center mb-2">
+          <span><%= song.title %></span>
+          <%= button_to 'Add to Playlist', '#', 
+              class: 'bg-green text-white p-2 rounded hover:bg-green-dark', 
+              data: { toggle: 'modal', target: "#addToPlaylistModal#{song.id}" } %>
+        </li>
+
+        <!-- Modal for Selecting Playlist -->
+        <div id="addToPlaylistModal<%= song.id %>" class="modal hidden fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center">
+          <div class="bg-darkGray p-4 rounded-lg">
+            <h4 class="text-green text-lg mb-2">Select Playlist for <%= song.title %></h4>
+            <%= form_with(url: add_to_playlist_path, method: :post, local: true) do |form| %>
+              <%= form.hidden_field :song_id, value: song.id %>
+              <%= form.collection_select :playlist_id, current_user.playlists, :id, :name, { prompt: 'Select a Playlist' }, class: 'w-full mb-4 bg-dark text-white rounded' %>
+              <div class="flex justify-between">
+                <%= form.submit 'Add', class: 'bg-green text-white p-2 rounded hover:bg-green-dark' %>
+                <button type="button" class="text-red-600" onclick="document.getElementById('addToPlaylistModal<%= song.id %>').classList.add('hidden')">Cancel</button>
+              </div>
+            <% end %>
+          </div>
+        </div>
+
+      <% end %>
+    </ul>
+  </div>
+</div>
+
+<script>
+  // Optional: Add JS to show/hide modals
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('[data-toggle="modal"]').forEach(button => {
+      button.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = button.getAttribute('data-target');
+        document.querySelector(target).classList.remove('hidden');
+      });
+    });
+  });
+</script>

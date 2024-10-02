@@ -21,10 +21,18 @@ Rails.application.routes.draw do
   post '/signin', to: 'sessions#create'
   delete '/signout', to: 'sessions#destroy'
 
+  post 'add_to_playlist', to: 'playlists#add_to_playlist'
+
   # Routes for albums (only index and show actions)
   resources :albums do
     resources :songs
   end
+
   resources :playlists
 
+  resources :playlists do
+    delete 'remove_song/:song_id', to: 'playlists#remove_song', as: 'remove_from_playlist'
+  end
+  
+  
 end

@@ -1,6 +1,6 @@
 class User < ApplicationRecord
   has_secure_password
-
+  has_many :playlists, dependent: :destroy
   enum role: { admin: 'ADMIN', user: 'USER' }
 
   validates :username, presence: true, uniqueness: true

@@ -9,7 +9,7 @@
     <%= javascript_include_tag 'application', 'data-turbo-track': 'reload' %>
   </head>
 
-  <body class="bg-dark text-white font-sans">
+  <body class="bg-dark h-full text-white font-sans">
 
     <!-- Navigation Bar -->
     <nav class="bg-darkGray w-full p-4 text-white flex justify-between items-center shadow-lg">
@@ -19,11 +19,11 @@
       <div class="flex items-center">
         <% if current_user %>
           <!-- Create Playlist Button -->
-          <%= link_to '+Playlist', new_playlist_path, class: "bg-green text-white px-3 py-1 rounded mr-2" %>
+          <%= link_to 'Playlist', playlists_path, class: "bg-green text-white px-3 py-1 rounded mr-2" %>
 
           <% if current_user.admin? %>
             <!-- Create Album Button for Admins -->
-            <%= link_to '+Album', new_album_path, class: "bg-green text-white px-3 py-1 rounded mr-2" %>
+            <%= link_to 'Add Album', new_album_path, class: "bg-green text-white px-3 py-1 rounded mr-2" %>
           <% end %>
         <% end %>
 
@@ -33,7 +33,7 @@
     </nav>
 
     <!-- Albums Section -->
-    <div class="container mx-auto p-4">
+    <div class="container mx-auto p-4 min-h-screen">
       <h1 class="text-3xl font-bold my-4">Albums</h1>
       <div id="albums-list">
         <%= render 'albums' %>
