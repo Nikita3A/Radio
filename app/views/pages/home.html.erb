@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="/assets/application.css" media="all" data-turbo-track="reload">
     
     <%= javascript_include_tag 'application', 'data-turbo-track': 'reload' %>
+    
   </head>
 
   <body class="bg-dark h-full text-white font-sans">
@@ -28,7 +29,7 @@
         <% end %>
 
         <!-- Sign Out Link -->
-<%= link_to 'Sign Out', signout_path, method: :delete, class: 'ml-4 text-white', rel: 'nofollow' %>
+        <%= button_to 'Sign Out', signout_path, method: :delete, class: 'ml-4 text-white', data: { turbo: false } %>
       </div>
     </nav>
 

@@ -45,7 +45,8 @@ Rails.application.routes.draw do
   # Routes for signin
   get '/signin', to: 'sessions#new'
   post '/signin', to: 'sessions#create'
-  delete '/signout', to: 'sessions#destroy'
+  # delete '/signout', to: 'sessions#destroy'
+  delete '/signout', to: 'sessions#destroy', as: :signout
 
   post 'add_to_playlist', to: 'playlists#add_to_playlist'
 
