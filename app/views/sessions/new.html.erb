@@ -21,6 +21,11 @@
       <div class="mb-2 sm:mb-4 bg-green-100">
         <%= form.submit "Signin", class: "w-full p-3 bg-green text-white rounded-2xl hover:bg-green-dark focus:outline-none" %>
       </div>
+
+      <!-- Sign Up Link -->
+      <div class="text-center mt-4">
+        <p class="text-white">Don't have an account? <a href="<%= signup_path %>" class="text-green hover:underline">Sign up</a></p>
+      </div>
     <% end %>
   </div>
 </div>

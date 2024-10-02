@@ -1,4 +1,6 @@
 class SessionsController < ApplicationController
+  skip_before_action :authenticate_user!, only: [:new, :create]
+
   def new
   end
 
@@ -14,7 +16,9 @@ class SessionsController < ApplicationController
     end
   end
   
-  
+  def redirect_if_logged_in
+    redirect_to root_path if current_user # Redirects to root if the user is already logged in
+  end
 
   def destroy
     session[:user_id] = nil
