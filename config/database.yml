@@ -16,7 +16,8 @@ test:
 
 production:
   <<: *default
-  database: radio
-  username: radio
-  password: 1111
-  host: localhost 
+  database: <%= ENV['DB_NAME'] || 'radio' %>
+  username: <%= ENV['DB_USERNAME'] %>
+  password: <%= ENV['DB_PASSWORD'] %>
+  host: <%= ENV['DB_HOST'] %>
+  port: <%= ENV['DB_PORT'] || 5432 %>
